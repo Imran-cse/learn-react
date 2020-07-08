@@ -1,40 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from 'antd';
 import { PlayCircleOutlined, PauseCircleOutlined } from '@ant-design/icons';
 
-export default class Music extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      play: false,
-    };
+const Music = (props) => {
+  const audio = new Audio(props.source);
 
-    this.url =
-      'https://media.hungama.com/c/4/1e7/e96/32084525/32084525_128.mp3?6aIXD8MOuF3ymt2-pxfEFXdkxwM2mBmRF9TjVgdWKjpDPWfp8OLwqyQ8CAkvebRyX0D6kmXzH-Dl5mCdqbnCZr4YaIBdBmuSzB2RShbOz5VrqS8gqcoAHLIZ0g6q8r8ImixLcw';
-    this.audio = new Audio(this.url);
-    this.audio.controls = true;
-  }
+  props.play ? audio.play() : audio.pause();
 
-  togglePlay() {
-    this.setState({ play: !this.state.play }, () => {
-      this.state.play ? this.audio.play() : this.audio.pause();
-    });
-  }
+  audio.onended = () => props.togglePlay();
 
-  render() {
-    return (
-      <div style={{ margin: 30 }}>
-        <p>Click to play audio</p>
-        <Button
-          type='primary'
-          icon={
-            this.state.play ? <PauseCircleOutlined /> : <PlayCircleOutlined />
-          }
-          onClick={() => this.togglePlay()}
-        >
-          {this.state.play ? 'Pause' : 'Play'}
-        </Button>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <Button
+        type='primary'
+        icon={props.play ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
+        onClick={() => props.togglePlay()}
+      >
+        {props.play ? 'Pause' : 'Play'}
+      </Button>
+    </div>
+  );
+};
+
+export default Music;
