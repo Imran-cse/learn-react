@@ -2,11 +2,11 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import Music from './components/Music';
+import AudioHome from './components/AudioHome';
 
 function App() {
   return (
-    <Music />
+    <AudioHome />
   );
 }
 
